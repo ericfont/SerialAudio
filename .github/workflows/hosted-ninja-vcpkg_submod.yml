@@ -24,8 +24,8 @@ jobs:
     steps:
       - uses: lyricwulf/abc@v1
         with:
-          windows: catkin
-          macos: catkin
+          windows: catkin_tools
+          macos: catkin_tools
           linux: catkin
 
       - uses: actions/checkout@v2

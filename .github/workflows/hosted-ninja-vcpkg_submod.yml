@@ -22,6 +22,12 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
+      - uses: lyricwulf/abc@v1
+        with:
+          windows: gperf
+          macos: gperf
+          linux: gperf
+
       - uses: actions/checkout@v2
         with:
           submodules: true

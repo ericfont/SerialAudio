@@ -4,3 +4,6 @@
 [submodule "serial"]
 	path = serial
 	url = https://github.com/wjwwood/serial
+[submodule "lib/serial"]
+	path = lib/serial
+	url = https://github.com/wjwwood/serial

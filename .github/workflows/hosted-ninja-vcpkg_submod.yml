@@ -24,9 +24,9 @@ jobs:
     steps:
       - uses: lyricwulf/abc@v1
         with:
-          windows: gperf
-          macos: gperf
-          linux: gperf
+          windows: catkin
+          macos: catkin
+          linux: catkin
 
       - uses: actions/checkout@v2
         with:

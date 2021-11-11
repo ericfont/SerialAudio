@@ -4,7 +4,6 @@
   "dependencies": [
     "fmt",
     "boost-config",
-    "sqlite3",
-    "qtbase"
+    "sqlite3"
   ]
 }

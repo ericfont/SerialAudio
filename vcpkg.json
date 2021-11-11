@@ -4,6 +4,8 @@
   "dependencies": [
     "fmt",
     "boost-config",
-    "sqlite3"
+    "sqlite3",
+    "boost",
+    "boost-asio"
   ]
 }

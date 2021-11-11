@@ -22,11 +22,18 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      - uses: lyricwulf/abc@v1
+      - uses: actions/setup-python@v1
+
+      - uses: BSFishy/pip-action@v1
         with:
-          windows: catkin_tools
-          macos: catkin_tools
-          linux: catkin
+          packages: |
+           catkin_tools
+
+           #      - uses: lyricwulf/abc@v1
+           #        with:
+           #          windows: catkin_tools
+           #          macos: catkin_tools
+           #          linux: catkin
 
       - uses: actions/checkout@v2
         with:

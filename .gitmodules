@@ -1,3 +1,6 @@
 [submodule "vcpkg"]
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg.git
+[submodule "lib/serial-port"]
+	path = lib/serial-port
+	url = https://github.com/ericfont/serial-port.git

@@ -1,41 +1,35 @@
-/*
- * File:   main.cpp
- * Author: fede.tft
- *
- * Created on September 10, 2009, 10:50 AM
- */
+
+
+//A serial class that appears as an iostream
 
 #include <iostream>
-#include "TimeoutSerial.h"
+#include "SerialStream.h"
 
 using namespace std;
-using namespace boost;
+using namespace boost::posix_time;
 
 int main(int argc, char* argv[])
 {
+    SerialOptions options;
+    options.setDevice("/dev/ttyACM0");
+    options.setBaudrate(115200);
+    options.setTimeout(seconds(3));
+    //options.setFlowControl(SerialOptions::software);
+    //options.setParity(SerialOptions::even);
+    //options.setCsize(7);
+    SerialStream serial(options);
+    serial.exceptions(ios::badbit | ios::failbit); //Important!
+    serial<<"B"<<endl;
+    while( true) {
     try {
-
-        TimeoutSerial serial("/dev/ttyACM0",115200);
-        serial.setTimeout(posix_time::seconds(5));
-
-        //Text test
-        serial.writeString("Hello world\r\n");
-        cout<<serial.readStringUntil("\r\n")<<endl;
-
-        //Binary test
-        unsigned char values[]={0xde,0xad,0xbe,0xef};
-        serial.write(reinterpret_cast<char*>(values),sizeof(values));
-        serial.read(reinterpret_cast<char*>(values),sizeof(values));
-        for(unsigned int i=0;i<sizeof(values);i++)
-        {
-            cout<<static_cast<int>(values[i])<<endl;
-        }
-
-        serial.close();
-
-    } catch(boost::system::system_error& e)
-    {
-        cout<<"Error: "<<e.what()<<endl;
-        return 1;
+        string s;
+        //serial>>s;
+        getline(serial,s);
+        cout<<s<<endl;
+    } catch(TimeoutException&) {
+        serial.clear(); //Don't forget to clear error flags after a timeout
+        cerr<<"Timeout occurred"<<endl;
     }
+    }
+    return 0;
 }

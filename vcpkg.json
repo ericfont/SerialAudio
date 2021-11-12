@@ -2,9 +2,9 @@
   "name": "main",
   "version-string": "latest",
   "dependencies": [
-    "boost-config",
-    "boost-bind",
-    "boost-asio",
-    "qt5-base"
+	  "boost-config",
+	  "boost-bind",
+	  "boost-asio",
+	  "boost"
   ]
 }

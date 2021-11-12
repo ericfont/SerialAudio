@@ -4,6 +4,7 @@
   "dependencies": [
     "boost-config",
     "boost-bind",
-    "boost-asio"
+    "boost-asio",
+    "qt5-base"
   ]
 }

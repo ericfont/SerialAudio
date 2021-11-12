@@ -4,3 +4,6 @@
 [submodule "lib/serial-port"]
 	path = lib/serial-port
 	url = https://github.com/ericfont/serial-port.git
+[submodule "DPF"]
+	path = DPF
+	url = https://github.com/DISTRHO/DPF.git

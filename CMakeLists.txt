@@ -5,7 +5,8 @@ project(SerialAudio VERSION 0.0.0)
 
 add_subdirectory("lib/serial-port")
 
-include(DPF/cmake/DPF-plugin.cmake)
+#include(DPF/cmake/DPF-plugin.cmake)a
+add_subdirectory(DPF)
 
 dpf_add_plugin(${PROJECT_NAME}
   TARGETS jack lv2 vst2

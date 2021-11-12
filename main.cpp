@@ -256,65 +256,9 @@ protected:
     {
         const TimePosition& timePos(getTimePosition());
         float* const output = outputs[0];
-
-        if (timePos.playing && timePos.bbt.valid)
+        for (uint32_t i = 0; i < frames; ++i)
         {
-            // Better to use double when manipulating time.
-            double secondsPerBeat = 60.0 / timePos.bbt.beatsPerMinute;
-            double framesPerBeat  = sampleRate * secondsPerBeat;
-            double beatFraction   = timePos.bbt.tick / timePos.bbt.ticksPerBeat;
-
-            // If beatFraction is zero, next beat is exactly at the start of currenct cycle.
-            // Otherwise, reset counter to the frames to the next beat.
-            counter = d_isZero(beatFraction)
-                    ? 0
-                    : static_cast<uint32_t>(framesPerBeat * (1.0 - beatFraction));
-
-            // Compute deltaPhase in normalized frequency.
-            // semitone is midi note number, which is A4 (440Hz at standard tuning) at 69.
-            // Frequency goes up to 1 octave higher at the start of bar.
-            float frequency = 440.0f * std::pow(2.0f, (100.0f * (semitone - 69.0f) + cent) / 1200.0f);
-            float deltaPhase = frequency / sampleRate;
-            float octave = timePos.bbt.beat == 1 ? 2.0f : 1.0f;
-
-            // Envelope reaches 1e-5 at decayTime after triggering.
-            decay = std::pow(1e-5, 1.0 / (decayTime * sampleRate));
-
-            // Reset phase and frequency at the start of transpose.
-            if (!wasPlaying)
-            {
-                phase = 0.0f;
-
-                deltaPhaseSmoother.value = deltaPhase;
-                envelopeSmoother.value = 0.0f;
-                gainSmoother.value = 0.0f;
-            }
-
-            for (uint32_t i = 0; i < frames; ++i)
-            {
-                if (counter <= 0)
-                {
-                    envelope = 1.0f;
-                    counter = static_cast<uint32_t>(framesPerBeat + 0.5);
-                    octave = (!wasPlaying || timePos.bbt.beat == static_cast<int32_t>(timePos.bbt.beatsPerBar)) ? 2.0f
-                                                                                                                : 1.0f;
-                }
-                --counter;
-
-                envelope *= decay;
-
-                phase += octave * deltaPhaseSmoother.process(deltaPhase);
-                phase -= std::floor(phase);
-
-                output[i] = gainSmoother.process(gain)
-                          * envelopeSmoother.process(envelope)
-                          * std::sin(float(2.0 * M_PI) * phase);
-            }
-        }
-        else
-        {
-            // Stop metronome if not playing or timePos.bbt is invalid.
-            std::memset(output, 0, sizeof(float)*frames);
+            output[i] = std::sin(float(2.0 * M_PI) * (timePos.frame + i)) * gain;
         }
 
         wasPlaying = timePos.playing;

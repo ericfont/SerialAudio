@@ -17,7 +17,7 @@
 #ifndef DISTRHO_PLUGIN_INFO_H_INCLUDED
 #define DISTRHO_PLUGIN_INFO_H_INCLUDED
 
-#define DISTRHO_PLUGIN_BRAND "DISTRHO"
+#define DISTRHO_PLUGIN_BRAND "EricFontaine"
 #define DISTRHO_PLUGIN_NAME "SerialAudio"
 #define DISTRHO_PLUGIN_URI "http://github.com/ericfont/SerialAudio"
 

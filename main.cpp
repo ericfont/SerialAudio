@@ -75,7 +75,8 @@ public:
           gain(0.5f),
           semitone(72),
           cent(0),
-          decayTime(0.2f)
+          decayTime(0.2f),
+          cumulative_frames(0)
     {
         sampleRateChanged(sampleRate);
     }
@@ -258,7 +259,7 @@ protected:
         float* const output = outputs[0];
         for (uint32_t i = 0; i < frames; ++i)
         {
-            output[i] = std::sin(float(2.0 * M_PI) * (timePos.frame + i)) * gain;
+            output[i] = std::sin(float(2.0 * M_PI) * (cumulative_frames++ / sampleRate ) * 440.0f) * gain;
         }
 
         wasPlaying = timePos.playing;
@@ -290,6 +291,7 @@ private:
     float phase;      // Sine wave phase. Normalized in [0, 1).
     float envelope;   // Current value of gain envelope.
     float decay;      // Coefficient to decay envelope in a frame.
+    unsigned long long int cumulative_frames;
 
     Smoother deltaPhaseSmoother;
     Smoother envelopeSmoother;

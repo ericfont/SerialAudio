@@ -5,6 +5,7 @@
 	  "boost-config",
 	  "boost-bind",
 	  "boost-asio",
-	  "boost"
+	  "boost",
+	  "pthread"
   ]
 }
